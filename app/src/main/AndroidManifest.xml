@@ -16,6 +16,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".contentprovider.MyEventProvider"
+            android:authorities="com.example.android.googlejamfinalproject.eventprovider"
+            android:exported="false" >
+        </provider>
+
+        <activity
+            android:name=".ListActivity"
+            android:label="@string/title_activity_list" >
+        </activity>
     </application>
 
 </manifest>

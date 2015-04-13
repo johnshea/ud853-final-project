@@ -1,7 +1,7 @@
 package com.example.android.googlejamfinalproject;
 
 import android.content.ContentValues;
-import android.database.Cursor;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,34 +74,38 @@ public class ReportEventFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                EventOpenHelper eventOpenHelper = new EventOpenHelper(getActivity());
-                SQLiteDatabase db = eventOpenHelper.getReadableDatabase();
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), ListActivity.class);
+                startActivity(intent);
 
-                String[] projection = {
-                        EventContract.EventEntry._ID,
-                        EventContract.EventEntry.COLUMN_NAME_DATE,
-                        EventContract.EventEntry.COLUMN_NAME_MAKE,
-                        EventContract.EventEntry.COLUMN_NAME_MODEL,
-                        EventContract.EventEntry.COLUMN_NAME_COLOR
-                };
-
-                String sortOrder = EventContract.EventEntry.COLUMN_NAME_COLOR + " DESC";
-
-                Cursor c = db.query(
-                        EventContract.EventEntry.TABLE_NAME,
-                        projection,
-                        null,
-                        null,
-                        null,
-                        null,
-                        sortOrder
-                );
-
-                Toast.makeText(getActivity(), "Rows in db: " + c.getCount(), Toast.LENGTH_SHORT).show();
-
-                c.close();
-                db.close();
-                eventOpenHelper.close();
+//                EventOpenHelper eventOpenHelper = new EventOpenHelper(getActivity());
+//                SQLiteDatabase db = eventOpenHelper.getReadableDatabase();
+//
+//                String[] projection = {
+//                        EventContract.EventEntry._ID,
+//                        EventContract.EventEntry.COLUMN_NAME_DATE,
+//                        EventContract.EventEntry.COLUMN_NAME_MAKE,
+//                        EventContract.EventEntry.COLUMN_NAME_MODEL,
+//                        EventContract.EventEntry.COLUMN_NAME_COLOR
+//                };
+//
+//                String sortOrder = EventContract.EventEntry.COLUMN_NAME_COLOR + " DESC";
+//
+//                Cursor c = db.query(
+//                        EventContract.EventEntry.TABLE_NAME,
+//                        projection,
+//                        null,
+//                        null,
+//                        null,
+//                        null,
+//                        sortOrder
+//                );
+//
+//                Toast.makeText(getActivity(), "Rows in db: " + c.getCount(), Toast.LENGTH_SHORT).show();
+//
+//                c.close();
+//                db.close();
+//                eventOpenHelper.close();
             }
         });
     }
