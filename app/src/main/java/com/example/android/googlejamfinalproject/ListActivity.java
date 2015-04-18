@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.googlejamfinalproject.contentprovider.MyEventProvider;
 import com.example.android.googlejamfinalproject.data.EventContract;
@@ -66,10 +70,31 @@ public class ListActivity extends ActionBarActivity {
                 0
         );
 
+        mCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                if(columnIndex==1) {
+                    TextView tv = (TextView) view;
+                    String text = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DATE));
+                    int index = text.lastIndexOf(":");
+                    String result = text.substring(0, index);
+                    tv.setText(result);
+                    return true;
+                }
+                return false;
+            }
+        });
+
         mListView = (ListView) findViewById(R.id.listView);
 
         mListView.setAdapter(mCursorAdapter);
 
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "id: " + String.valueOf(id), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
