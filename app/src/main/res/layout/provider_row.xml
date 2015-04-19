@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ID"
         android:id="@+id/textView_provider_id"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
         android:id="@+id/textView_provider_date"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,20 +26,22 @@
         android:text="Make"
         android:id="@+id/textView_provider_make"
         android:layout_weight="1"
-        android:textSize="24dp" />
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Model"
         android:id="@+id/textView_provider_model"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/black" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Color"
         android:id="@+id/textView_provider_color"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/black" />
 
 </LinearLayout>

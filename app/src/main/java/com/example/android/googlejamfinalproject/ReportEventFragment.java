@@ -25,7 +25,7 @@ public class ReportEventFragment extends Fragment {
     Button btnSubmit;
     Button btnCancel;
     Button btnListEvents;
-    Button btnShowDetailMap;
+    //Button btnShowDetailMap;
 
     EditText editText_event;
     EditText editText_color;
@@ -54,7 +54,7 @@ public class ReportEventFragment extends Fragment {
         btnSubmit = (Button) getView().findViewById(R.id.buttonSubmit);
         btnCancel = (Button) getView().findViewById(R.id.buttonCancel);
         btnListEvents = (Button) getView().findViewById(R.id.buttonList);
-        btnShowDetailMap = (Button) getView().findViewById(R.id.buttonMap);
+        //btnShowDetailMap = (Button) getView().findViewById(R.id.buttonMap);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +139,7 @@ public class ReportEventFragment extends Fragment {
             }
         });
 
+        /*
         btnShowDetailMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,5 +148,6 @@ public class ReportEventFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        */
     }
 }

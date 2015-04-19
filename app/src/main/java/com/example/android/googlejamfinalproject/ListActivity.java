@@ -1,5 +1,6 @@
 package com.example.android.googlejamfinalproject;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.googlejamfinalproject.contentprovider.MyEventProvider;
 import com.example.android.googlejamfinalproject.data.EventContract;
@@ -92,7 +92,12 @@ public class ListActivity extends ActionBarActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "id: " + String.valueOf(id), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "id: " + String.valueOf(id), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), MapActivity.class);
+                intent.putExtra("id", id);
+                startActivity(intent);
             }
         });
     }
