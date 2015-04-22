@@ -2,6 +2,7 @@ package com.example.android.googlejamfinalproject;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -75,6 +76,22 @@ public class ListActivity extends ActionBarActivity {
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 if(columnIndex==1) {
                     TextView tv = (TextView) view;
+
+                    String carColor = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_COLOR));
+                    switch(carColor) {
+                        case "Blue":
+                            tv.setTextColor(Color.BLUE);
+                            break;
+                        case "Red":
+                            tv.setTextColor(Color.RED);
+                            break;
+                        case "Green":
+                            tv.setTextColor(Color.GREEN);
+                            break;
+                        case "Yellow":
+                            tv.setTextColor(Color.YELLOW);
+                            break;
+                    }
                     String text = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DATE));
                     int index = text.lastIndexOf(":");
                     String result = text.substring(0, index);
