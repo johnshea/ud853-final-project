@@ -1,12 +1,14 @@
 package com.example.android.googlejamfinalproject;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,8 +26,6 @@ public class ReportEventFragment extends Fragment {
 
     Button btnSubmit;
     Button btnCancel;
-    Button btnListEvents;
-    //Button btnShowDetailMap;
 
     EditText editText_event;
     EditText editText_color;
@@ -41,9 +41,24 @@ public class ReportEventFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem menuItem = menu.findItem(R.id.action_create_new_alert);
+        menuItem.setVisible(false);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_report_event, container, false);
         return rootView;
     }
 
@@ -53,8 +68,6 @@ public class ReportEventFragment extends Fragment {
 
         btnSubmit = (Button) getView().findViewById(R.id.buttonSubmit);
         btnCancel = (Button) getView().findViewById(R.id.buttonCancel);
-        btnListEvents = (Button) getView().findViewById(R.id.buttonList);
-        //btnShowDetailMap = (Button) getView().findViewById(R.id.buttonMap);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,24 +143,5 @@ public class ReportEventFragment extends Fragment {
             }
         });
 
-        btnListEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), ListActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        /*
-        btnShowDetailMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MapActivity.class);
-                startActivity(intent);
-            }
-        });
-        */
     }
 }

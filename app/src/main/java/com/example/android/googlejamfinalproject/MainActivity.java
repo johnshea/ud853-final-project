@@ -5,16 +5,19 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ReportEventFragment())
+                    .add(R.id.container, new MainFragment())
                     .commit();
         }
     }
@@ -38,7 +41,27 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.action_create_new_alert) {
+            //Toast.makeText(getApplicationContext(), "Go to create alert screen", Toast.LENGTH_SHORT).show();
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.container, new ReportEventFragment());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        //return super.onSupportNavigateUp();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportFragmentManager().popBackStackImmediate();
+        return super.onSupportNavigateUp();
+
+    }
 }
