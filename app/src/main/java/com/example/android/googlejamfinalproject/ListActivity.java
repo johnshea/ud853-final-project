@@ -1,6 +1,9 @@
 package com.example.android.googlejamfinalproject;
 
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,7 +20,7 @@ import com.example.android.googlejamfinalproject.contentprovider.MyEventProvider
 import com.example.android.googlejamfinalproject.data.EventContract;
 
 
-public class ListActivity extends ActionBarActivity {
+public class ListActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     SimpleCursorAdapter mCursorAdapter;
     ListView mListView;
@@ -27,26 +30,28 @@ public class ListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        String[] mProjection = {EventContract.EventEntry._ID,
-                EventContract.EventEntry.COLUMN_NAME_DATE,
-                EventContract.EventEntry.COLUMN_NAME_MAKE,
-                EventContract.EventEntry.COLUMN_NAME_MODEL,
-                EventContract.EventEntry.COLUMN_NAME_COLOR
-        };
+        getLoaderManager().initLoader(0, null, this);
 
-        String mSelectionClause = null;
-
-        String[] mSelectionArgs = {""};
-
-        String mSortOrder = EventContract.EventEntry._ID + " DESC";
-
-        Cursor cursor = getContentResolver().query(
-                MyEventProvider.CONTENT_URI,
-                mProjection,
-                mSelectionClause,
-                mSelectionArgs,
-                mSortOrder
-        );
+//        String[] mProjection = {EventContract.EventEntry._ID,
+//                EventContract.EventEntry.COLUMN_NAME_DATE,
+//                EventContract.EventEntry.COLUMN_NAME_MAKE,
+//                EventContract.EventEntry.COLUMN_NAME_MODEL,
+//                EventContract.EventEntry.COLUMN_NAME_COLOR
+//        };
+//
+//        String mSelectionClause = null;
+//
+//        String[] mSelectionArgs = {""};
+//
+//        String mSortOrder = EventContract.EventEntry._ID + " DESC";
+//
+//        Cursor cursor = getContentResolver().query(
+//                MyEventProvider.CONTENT_URI,
+//                mProjection,
+//                mSelectionClause,
+//                mSelectionArgs,
+//                mSortOrder
+//        );
 
         String[] mColumns = {EventContract.EventEntry._ID,
                 EventContract.EventEntry.COLUMN_NAME_DATE,
@@ -65,7 +70,7 @@ public class ListActivity extends ActionBarActivity {
         mCursorAdapter = new SimpleCursorAdapter(
                 getApplicationContext(),
                 R.layout.provider_row,
-                cursor,
+                null,
                 mColumns,
                 mListItems,
                 0
@@ -91,6 +96,11 @@ public class ListActivity extends ActionBarActivity {
                         case "Yellow":
                             tv.setTextColor(Color.YELLOW);
                             break;
+                        case "White":
+                            tv.setTextColor(Color.WHITE);
+                            break;
+                        default:
+                            tv.setTextColor(Color.BLACK);
                     }
                     String text = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DATE));
                     int index = text.lastIndexOf(":");
@@ -139,5 +149,35 @@ public class ListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+//        return null;
+        String[] mProjection = {EventContract.EventEntry._ID,
+                EventContract.EventEntry.COLUMN_NAME_DATE,
+                EventContract.EventEntry.COLUMN_NAME_MAKE,
+                EventContract.EventEntry.COLUMN_NAME_MODEL,
+                EventContract.EventEntry.COLUMN_NAME_COLOR
+        };
+
+        String mSelectionClause = null;
+
+        String[] mSelectionArgs = {""};
+
+        String mSortOrder = EventContract.EventEntry._ID + " DESC";
+
+        return new CursorLoader(getApplicationContext(), MyEventProvider.CONTENT_URI,
+                mProjection, mSelectionClause, mSelectionArgs, mSortOrder);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }

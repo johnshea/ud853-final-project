@@ -31,6 +31,8 @@
             android:label="@string/title_activity_activity_map" >
         </activity>
 
+        <service android:name=".services.CreateAlertService" />
+
         <provider
             android:name=".contentprovider.MyEventProvider"
             android:authorities="com.example.android.googlejamfinalproject.eventprovider"

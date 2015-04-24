@@ -2,6 +2,7 @@ package com.example.android.googlejamfinalproject;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -93,6 +94,8 @@ public class ReportEventFragment extends Fragment {
                 values.put(EventContract.EventEntry.COLUMN_NAME_MAKE, editText_make.getText().toString());
                 values.put(EventContract.EventEntry.COLUMN_NAME_MODEL, editText_model.getText().toString());
                 values.put(EventContract.EventEntry.COLUMN_NAME_COLOR, editText_color.getText().toString());
+
+
 
                 long newRowId;
                 newRowId = db.insert(

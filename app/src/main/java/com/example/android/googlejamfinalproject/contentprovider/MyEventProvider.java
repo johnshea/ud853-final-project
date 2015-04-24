@@ -68,7 +68,7 @@ public class MyEventProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
+        getContext().getContentResolver().notifyChange(Uri.parse(BASE_PATH + "/" + id), null);
         return Uri.parse(BASE_PATH + "/" + id);
     }
 

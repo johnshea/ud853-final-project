@@ -9,10 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.android.googlejamfinalproject.services.CreateAlertService;
+
 public class MainFragment extends Fragment {
 
     Button btnListCurrentAlerts;
     Button btnCreateNewAlert;
+    Button btnStartService;
+    Button btnStopService;
 
     public MainFragment() {
         // Required empty public constructor
@@ -36,6 +40,26 @@ public class MainFragment extends Fragment {
 
         btnListCurrentAlerts = (Button) getView().findViewById(R.id.button_mainfragment_listcurrentalerts);
         btnCreateNewAlert = (Button) getView().findViewById(R.id.button_mainfragment_createnewalert);
+        btnStartService = (Button) getView().findViewById(R.id.button_mainfragment_startservice);
+        btnStopService =  (Button) getView().findViewById(R.id.button_mainfragment_stopservice);
+
+        btnStartService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateAlertService.class);
+                getActivity().startService(intent);
+
+
+            }
+        });
+
+        btnStopService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CreateAlertService.class);
+                getActivity().stopService(intent);
+            }
+        });
 
         btnListCurrentAlerts.setOnClickListener(new View.OnClickListener() {
             @Override
