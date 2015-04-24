@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapActivity extends ActionBarActivity
         implements OnMapReadyCallback {
 
+    String category = "0";
+    String dateTime = "0:00 AM";
     Float lat = 0.0f;
     Float lon = 0.0f;
     String location = "Center of World";
@@ -67,15 +69,35 @@ public class MapActivity extends ActionBarActivity
                 );
 
                 if (cursor.moveToFirst()) {
+                    category = cursor.getString(8);
+                    dateTime = cursor.getString(1);
                     location = cursor.getString(7);
                     lat = cursor.getFloat(5);
                     lon = cursor.getFloat(6);
+
+                    TextView tvDateTime = (TextView)findViewById(R.id.textView2);
+                    tvDateTime.setText(dateTime);
+
+                    TextView tvCategory = (TextView)findViewById(R.id.textView_map_category);
+                    switch(category) {
+                        case "1":
+                            category = "Drunk Driver";
+                            break;
+                        case "2":
+                            category = "Aggressive Driver";
+                            break;
+                        default:
+                            category = "Safety Issue";
+                    }
+                    tvCategory.setText(category);
 
                     TextView tv = (TextView)findViewById(R.id.textView3);
                     tv.setText(location);
 
                     tv = (TextView)findViewById(R.id.textView4);
                     tv.setText(String.valueOf(lat) + "," + String.valueOf(lon));
+
+
 
                 }
 

@@ -11,7 +11,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="08:23 AM"
+            android:text="NULL"
             android:layout_weight="1"
             android:textSize="24dp"
             android:id="@+id/textView2" />
@@ -27,10 +27,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="NULL"
             android:textSize="24dp"
             android:layout_weight="1"
             android:id="@+id/textView4" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NULL"
+            android:textSize="24dp"
+            android:layout_weight="1"
+            android:id="@+id/textView_map_category" />
 
     </LinearLayout>
 
@@ -39,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:name="com.google.android.gms.maps.MapFragment"/>
-
+<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,6 +62,6 @@
         android:text="Driver's Side"
         android:textSize="36dp"
         android:id="@+id/textView6" />
-
+-->
 
 </LinearLayout>

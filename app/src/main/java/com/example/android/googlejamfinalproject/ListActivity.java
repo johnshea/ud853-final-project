@@ -57,14 +57,16 @@ public class ListActivity extends ActionBarActivity implements LoaderManager.Loa
                 EventContract.EventEntry.COLUMN_NAME_DATE,
                 EventContract.EventEntry.COLUMN_NAME_MAKE,
                 EventContract.EventEntry.COLUMN_NAME_MODEL,
-                EventContract.EventEntry.COLUMN_NAME_COLOR
+                EventContract.EventEntry.COLUMN_NAME_COLOR,
+                EventContract.EventEntry.COLUMN_NAME_EVENT_ID
         };
 
         int[] mListItems = { R.id.textView_provider_id,
                 R.id.textView_provider_date,
                 R.id.textView_provider_make,
                 R.id.textView_provider_model,
-                R.id.textView_provider_color
+                R.id.textView_provider_color,
+                R.id.textView_provider_event_id
         };
 
         mCursorAdapter = new SimpleCursorAdapter(
@@ -79,35 +81,69 @@ public class ListActivity extends ActionBarActivity implements LoaderManager.Loa
         mCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                if(columnIndex==1) {
-                    TextView tv = (TextView) view;
+                switch( columnIndex ) {
+                    case 1:
+                        TextView tv = (TextView) view;
+                        String text = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DATE));
+                        int index = text.lastIndexOf(":");
+                        String result = text.substring(0, index);
+                        tv.setText(result);
+                        return true;
+//                        break;
+                    case 5:
+                        TextView tvColor = (TextView) view;
 
-                    String carColor = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_COLOR));
-                    switch(carColor) {
-                        case "Blue":
-                            tv.setTextColor(Color.BLUE);
-                            break;
-                        case "Red":
-                            tv.setTextColor(Color.RED);
-                            break;
-                        case "Green":
-                            tv.setTextColor(Color.GREEN);
-                            break;
-                        case "Yellow":
-                            tv.setTextColor(Color.YELLOW);
-                            break;
-                        case "White":
-                            tv.setTextColor(Color.WHITE);
-                            break;
-                        default:
-                            tv.setTextColor(Color.BLACK);
-                    }
-                    String text = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DATE));
-                    int index = text.lastIndexOf(":");
-                    String result = text.substring(0, index);
-                    tv.setText(result);
-                    return true;
+                        String eventId = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_EVENT_ID));
+                        if (eventId == null) {
+                            eventId = "3";
+                        }
+                        switch( eventId ) {
+                            case "1":
+                                tvColor.setTextColor(Color.RED);
+                                tvColor.setText("Drunk");
+                                break;
+                            case "2":
+                                tvColor.setTextColor(Color.rgb(0xFF, 0x99, 0x00));
+                                tvColor.setText("Aggressive");
+//                            tv.setTextColor(Color.BLUE);
+                                break;
+                            default:
+                                tvColor.setTextColor(Color.BLACK);
+                                tvColor.setText("Safety");
+                        }
+                        return true;
+//                        break;
+
+
+
                 }
+//                if(columnIndex==1) {
+
+
+//                    String carColor = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_COLOR));
+//                    switch(carColor) {
+//                        case "Blue":
+//                            tv.setTextColor(Color.BLUE);
+//                            break;
+//                        case "Red":
+//                            tv.setTextColor(Color.RED);
+//                            break;
+//                        case "Green":
+//                            tv.setTextColor(Color.GREEN);
+//                            break;
+//                        case "Yellow":
+//                            tv.setTextColor(Color.YELLOW);
+//                            break;
+//                        case "White":
+//                            tv.setTextColor(Color.WHITE);
+//                            break;
+//                        default:
+//                            tv.setTextColor(Color.BLACK);
+//                    }
+
+
+
+//                }
                 return false;
             }
         });
@@ -158,7 +194,8 @@ public class ListActivity extends ActionBarActivity implements LoaderManager.Loa
                 EventContract.EventEntry.COLUMN_NAME_DATE,
                 EventContract.EventEntry.COLUMN_NAME_MAKE,
                 EventContract.EventEntry.COLUMN_NAME_MODEL,
-                EventContract.EventEntry.COLUMN_NAME_COLOR
+                EventContract.EventEntry.COLUMN_NAME_COLOR,
+                EventContract.EventEntry.COLUMN_NAME_EVENT_ID
         };
 
         String mSelectionClause = null;

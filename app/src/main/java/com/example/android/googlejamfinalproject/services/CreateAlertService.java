@@ -91,7 +91,7 @@ public class CreateAlertService extends Service {
                     ContentValues values = new ContentValues();
 
                     values.put(EventContract.EventEntry.COLUMN_NAME_DATE, dateStamp);
-                    values.put(EventContract.EventEntry.COLUMN_NAME_CATEGORY, randomCategory);
+                    values.put(EventContract.EventEntry.COLUMN_NAME_EVENT_ID, randomCategory);
                     values.put(EventContract.EventEntry.COLUMN_NAME_MAKE, carType[0]);
                     values.put(EventContract.EventEntry.COLUMN_NAME_MODEL, carType[1]);
                     values.put(EventContract.EventEntry.COLUMN_NAME_COLOR, randomColor);
