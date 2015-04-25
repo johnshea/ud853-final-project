@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
-import android.widget.Toast;
 
 import com.example.android.googlejamfinalproject.contentprovider.MyEventProvider;
 import com.example.android.googlejamfinalproject.data.EventContract;
@@ -47,7 +46,7 @@ public class CreateAlertService extends Service {
 
         @Override
         public void run() {
-            Toast.makeText(getApplicationContext(), mText, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), mText, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -123,7 +122,7 @@ public class CreateAlertService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         mHandler = new Handler();
 
-        Toast.makeText(this, "onStartCommand - CreateAlertService", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onStartCommand - CreateAlertService", Toast.LENGTH_SHORT).show();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -131,7 +130,7 @@ public class CreateAlertService extends Service {
     public void onDestroy() {
 //        super.onDestroy();
         blnKeepCreating=false;
-        Toast.makeText(this, "onDestroy - CreateAlertService", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "onDestroy - CreateAlertService", Toast.LENGTH_SHORT).show();
 
     }
 

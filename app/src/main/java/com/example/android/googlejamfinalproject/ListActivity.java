@@ -30,6 +30,8 @@ public class ListActivity extends ActionBarActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getLoaderManager().initLoader(0, null, this);
 
 //        String[] mProjection = {EventContract.EventEntry._ID,

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GoogleJamFinalProject</string>
+    <string name="app_name">AutoCorrect</string>
     <string name="hello_world">Hello world!</string>
     <string name="report_event">Report Event</string>
     <string name="action_settings">Settings</string>
@@ -10,4 +10,41 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lobby">App Lobby</string>
     <string name="action_create_alert">Create Alert</string>
+
+    <string-array name="colors_array">
+        <item>Black</item>
+        <item>Blue</item>
+        <item>Brown</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>White</item>
+        <item>Yellow</item>
+    </string-array>
+
+    <string-array name="makes_array">
+        <item>Ford</item>
+        <item>Honda</item>
+        <item>Subaru</item>
+        <item>Toyota</item>
+    </string-array>
+
+    <string-array name="models_array">
+        <item>Civic</item>
+        <item>Accord</item>
+        <item>Pilot</item>
+        <item>Camry</item>
+        <item>Corolla</item>
+        <item>Forester</item>
+        <item>Impreza</item>
+        <item>Taurus</item>
+        <item>Explorer</item>
+    </string-array>
+
+    <string-array name="events_array">
+        <item>Safety Issue</item>
+        <item>Drunk Driver</item>
+        <item>Aggressive Driver</item>
+        <item>Safety Issue</item>
+    </string-array>
+
 </resources>

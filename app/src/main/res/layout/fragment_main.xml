@@ -34,6 +34,7 @@
                 android:id="@+id/button_mainfragment_listcurrentalerts" />
 
             <Button
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Create New Alert"
@@ -43,14 +44,14 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Start Service"
+                android:text="Monitor New Alerts"
                 android:layout_weight="1"
                 android:id="@+id/button_mainfragment_startservice" />
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stop Service"
+                android:text="Pause Alerts"
                 android:layout_weight="1"
                 android:id="@+id/button_mainfragment_stopservice" />
 

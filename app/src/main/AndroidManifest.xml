@@ -23,12 +23,14 @@
 
         <activity
             android:name=".ListActivity"
-            android:label="@string/title_activity_list" >
+            android:label="@string/title_activity_list"
+            android:parentActivityName=".MainActivity">
         </activity>
 
         <activity
             android:name=".MapActivity"
-            android:label="@string/title_activity_activity_map" >
+            android:label="@string/title_activity_activity_map"
+            android:parentActivityName=".ListActivity">
         </activity>
 
         <service android:name=".services.CreateAlertService" />
