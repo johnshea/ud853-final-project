@@ -34,14 +34,6 @@
                 android:id="@+id/button_mainfragment_listcurrentalerts" />
 
             <Button
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Create New Alert"
-                android:layout_weight="1"
-                android:id="@+id/button_mainfragment_createnewalert" />
-
-            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monitor New Alerts"
@@ -54,6 +46,14 @@
                 android:text="Pause Alerts"
                 android:layout_weight="1"
                 android:id="@+id/button_mainfragment_stopservice" />
+
+            <Button
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Notification"
+                android:layout_weight="1"
+                android:id="@+id/button_mainfragment_createnewalert" />
 
         </LinearLayout>
 

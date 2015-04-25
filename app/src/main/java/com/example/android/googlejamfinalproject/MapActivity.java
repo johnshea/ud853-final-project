@@ -80,6 +80,9 @@ public class MapActivity extends ActionBarActivity
 
                     TextView tvCategory = (TextView)findViewById(R.id.textView_map_category);
                     switch(category) {
+                        case "0":
+                            category = "Nice!";
+                            break;
                         case "1":
                             category = "Drunk Driver";
                             break;

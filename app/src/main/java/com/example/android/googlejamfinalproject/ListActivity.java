@@ -100,6 +100,10 @@ public class ListActivity extends ActionBarActivity implements LoaderManager.Loa
                             eventId = "3";
                         }
                         switch( eventId ) {
+                            case "0":
+                                tvColor.setTextColor(Color.DKGRAY);
+                                tvColor.setText("Nice!");
+                                break;
                             case "1":
                                 tvColor.setTextColor(Color.RED);
                                 tvColor.setText("Drunk");
