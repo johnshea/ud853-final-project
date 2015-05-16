@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-            android:name=".ListActivity"
+            android:name=".AlertListActivity"
             android:label="@string/title_activity_list"
             android:parentActivityName=".MainActivity">
         </activity>
@@ -30,7 +30,7 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_activity_map"
-            android:parentActivityName=".ListActivity">
+            android:parentActivityName=".AlertListActivity">
         </activity>
 
         <service android:name=".services.CreateAlertService" />

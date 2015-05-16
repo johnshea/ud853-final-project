@@ -3,7 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="report_event">Report Event</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_list">AlertListActivity</string>
     <string name="title_activity_activity_map">activity_map</string>
 
 <!-- TODO: Remove or change this placeholder text -->

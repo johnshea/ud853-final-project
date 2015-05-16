@@ -56,13 +56,20 @@ public class MainFragment extends Fragment {
         btnStartService = (Button) getView().findViewById(R.id.button_mainfragment_startservice);
         btnStopService =  (Button) getView().findViewById(R.id.button_mainfragment_stopservice);
 
+        btnListCurrentAlerts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), AlertListActivity.class);
+                startActivity(intent);
+            }
+        });
+
         btnStartService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateAlertService.class);
                 getActivity().startService(intent);
-
-
             }
         });
 
@@ -71,15 +78,6 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateAlertService.class);
                 getActivity().stopService(intent);
-            }
-        });
-
-        btnListCurrentAlerts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), ListActivity.class);
-                startActivity(intent);
             }
         });
 
