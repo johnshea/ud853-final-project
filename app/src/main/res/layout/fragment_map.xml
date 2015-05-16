@@ -44,24 +44,25 @@
     </LinearLayout>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/map_old"
+        android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:name="com.google.android.gms.maps.MapFragment"/>
-<!--
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Brake Light Out"
-        android:textSize="36dp"
-        android:id="@+id/textView5" />
+        android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Driver's Side"
+        android:text="Map Fragment"
         android:textSize="36dp"
-        android:id="@+id/textView6" />
--->
+        android:id="@+id/textView5" />
+
+    <!--
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Driver's Side"
+            android:textSize="36dp"
+            android:id="@+id/textView6" />
+    -->
 
 </LinearLayout>
