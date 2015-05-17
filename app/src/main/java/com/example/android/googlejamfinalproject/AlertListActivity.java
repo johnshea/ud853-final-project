@@ -1,21 +1,64 @@
 package com.example.android.googlejamfinalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class AlertListActivity extends ActionBarActivity {
+public class AlertListActivity extends ActionBarActivity implements AlertListFragment.OnAlertSelectedListener {
+
+    boolean mDualPane = false;
+
+    public void onAlertSelected(long id) {
+        if (mDualPane) {
+            // do two pane stuff
+            DetailMapFragment newFragment = new DetailMapFragment();
+            Bundle args = new Bundle();
+            args.putLong("id", id);
+            newFragment.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_right, newFragment);
+//            transaction.addToBackStack(null);
+            transaction.commit();
+
+        } else {
+            //do one pane stuff
+            Intent intent = new Intent();
+            intent.setClass(this, MapActivity.class);
+            intent.putExtra("id", id);
+            startActivity(intent);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        if(findViewById(R.id.fragment_left) != null) {
+            mDualPane = true;
+        }
+
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_list, new AlertListFragment())
-                    .commit();
+            if (mDualPane) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_left, new AlertListFragment())
+                        .commit();
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_right, new DetailMapFragment())
+                        .commit();
+
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container_list, new AlertListFragment())
+                        .commit();
+            }
+
         }
 
     }

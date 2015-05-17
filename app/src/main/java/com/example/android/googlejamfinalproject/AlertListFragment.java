@@ -1,6 +1,6 @@
 package com.example.android.googlejamfinalproject;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +23,26 @@ import com.example.android.googlejamfinalproject.data.EventContract;
  * A simple {@link Fragment} subclass.
  */
 public class AlertListFragment extends Fragment implements LoaderCallbacks<Cursor> {
+
+    OnAlertSelectedListener mCallback;
+
+    public interface OnAlertSelectedListener {
+        public void onAlertSelected(long id);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (OnAlertSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnHeadlineSelectedListener");
+        }
+    }
 
     SimpleCursorAdapter mCursorAdapter;
     ListView mListView;
@@ -125,10 +145,7 @@ public class AlertListFragment extends Fragment implements LoaderCallbacks<Curso
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MapActivity.class);
-                intent.putExtra("id", id);
-                startActivity(intent);
+                mCallback.onAlertSelected(id);
             }
         });
 
