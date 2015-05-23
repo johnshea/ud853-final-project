@@ -4,12 +4,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class AlertListActivity extends ActionBarActivity implements AlertListFragment.OnAlertSelectedListener {
 
     boolean mDualPane = false;
+
+    public boolean isDualPane(){
+        return mDualPane;
+    }
+
+    public void onDefaultSelected(long id) {
+        if (mDualPane) {
+            this.onAlertSelected(id);
+        }
+    }
 
     public void onAlertSelected(long id) {
         if (mDualPane) {
@@ -19,10 +30,15 @@ public class AlertListActivity extends ActionBarActivity implements AlertListFra
             args.putLong("id", id);
             newFragment.setArguments(args);
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_right, newFragment);
+            try {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_right, newFragment);
 //            transaction.addToBackStack(null);
-            transaction.commit();
+                transaction.commit();
+
+            } catch (Exception e) {
+                Log.e("Frag Error Exception", e.getMessage().toString());
+            }
 
         } else {
             //do one pane stuff
@@ -48,11 +64,9 @@ public class AlertListActivity extends ActionBarActivity implements AlertListFra
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_left, new AlertListFragment())
                         .commit();
-
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_right, new DetailMapFragment())
                         .commit();
-
             } else {
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.container_list, new AlertListFragment())

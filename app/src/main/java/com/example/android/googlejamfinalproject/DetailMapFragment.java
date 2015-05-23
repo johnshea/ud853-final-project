@@ -55,70 +55,108 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
 
         try {
 
-            long id = getArguments().getLong("id", -1L);
-            if (id != -1) {
-                String[] mProjection = {EventContract.EventEntry._ID,
-                        EventContract.EventEntry.COLUMN_NAME_DATE,
-                        EventContract.EventEntry.COLUMN_NAME_MAKE,
-                        EventContract.EventEntry.COLUMN_NAME_MODEL,
-                        EventContract.EventEntry.COLUMN_NAME_COLOR,
-                        EventContract.EventEntry.COLUMN_NAME_LAT,
-                        EventContract.EventEntry.COLUMN_NAME_LON,
-                        EventContract.EventEntry.COLUMN_NAME_LOCATION,
-                        EventContract.EventEntry.COLUMN_NAME_EVENT_ID
-                };
+            Bundle bundle = getArguments();
 
-                String mSelectionClause = "_id = ?";
+            long id;
 
-                String[] mSelectionArgs = {String.valueOf(id)};
-
-                String mSortOrder = EventContract.EventEntry._ID + " DESC";
-
-                Uri uri = Uri.withAppendedPath(MyEventProvider.CONTENT_URI, String.valueOf(id));
-
-                Cursor cursor = getActivity().getContentResolver().query(
-                        uri,
-                        mProjection,
-                        mSelectionClause,
-                        mSelectionArgs,
-                        mSortOrder
-                );
-
-                if (cursor.moveToFirst()) {
-                    category = cursor.getString(8);
-                    dateTime = cursor.getString(1);
-                    location = cursor.getString(7);
-                    lat = cursor.getFloat(5);
-                    lon = cursor.getFloat(6);
-
-                    TextView tvDateTime = (TextView) getView().findViewById(R.id.textView2);
-                    tvDateTime.setText(dateTime);
-
-                    TextView tvCategory = (TextView) getView().findViewById(R.id.textView_map_category);
-                    switch (category) {
-                        case "0":
-                            category = "Nice!";
-                            break;
-                        case "1":
-                            category = "Drunk Driver";
-                            break;
-                        case "2":
-                            category = "Aggressive Driver";
-                            break;
-                        default:
-                            category = "Safety Issue";
-                    }
-                    tvCategory.setText(category);
-
-                    TextView tv = (TextView) getView().findViewById(R.id.textView3);
-                    tv.setText(location);
-
-                    tv = (TextView) getView().findViewById(R.id.textView4);
-                    tv.setText(String.valueOf(lat) + "," + String.valueOf(lon));
-
-                }
-
+            if (bundle == null) {
+                id = -1;
+            } else {
+                id = getArguments().getLong("id", -1L);
             }
+
+            String[] mProjection = {EventContract.EventEntry._ID,
+                    EventContract.EventEntry.COLUMN_NAME_DATE,
+                    EventContract.EventEntry.COLUMN_NAME_MAKE,
+                    EventContract.EventEntry.COLUMN_NAME_MODEL,
+                    EventContract.EventEntry.COLUMN_NAME_COLOR,
+                    EventContract.EventEntry.COLUMN_NAME_LAT,
+                    EventContract.EventEntry.COLUMN_NAME_LON,
+                    EventContract.EventEntry.COLUMN_NAME_LOCATION,
+                    EventContract.EventEntry.COLUMN_NAME_EVENT_ID
+            };
+
+            String mSelectionClause;
+            String[] mSelectionArgs;
+            Uri uri;
+
+            if (id != -1) {
+                mSelectionClause = "_id = ?";
+                mSelectionArgs = new String[1];
+                mSelectionArgs[0] = String.valueOf(id);
+                uri = Uri.withAppendedPath(MyEventProvider.CONTENT_URI, String.valueOf(id));
+            } else {
+                mSelectionClause = null;
+                mSelectionArgs = null;
+                uri = MyEventProvider.CONTENT_URI;
+            }
+
+            String mSortOrder = EventContract.EventEntry._ID + " DESC";
+
+            Cursor cursor = getActivity().getContentResolver().query(
+                    uri,
+                    mProjection,
+                    mSelectionClause,
+                    mSelectionArgs,
+                    mSortOrder
+            );
+
+            if (cursor.moveToFirst()) {
+                category = cursor.getString(8);
+                dateTime = cursor.getString(1);
+                location = cursor.getString(7);
+                lat = cursor.getFloat(5);
+                lon = cursor.getFloat(6);
+
+                TextView tvDateTime = (TextView) getView().findViewById(R.id.textView2);
+                tvDateTime.setText(dateTime);
+
+                TextView tvCategory = (TextView) getView().findViewById(R.id.textView_map_category);
+                switch (category) {
+                    case "0":
+                        category = "Nice!";
+                        break;
+                    case "1":
+                        category = "Drunk Driver";
+                        break;
+                    case "2":
+                        category = "Aggressive Driver";
+                        break;
+                    default:
+                        category = "Safety Issue";
+                }
+                tvCategory.setText(category);
+                tvCategory.setVisibility(View.VISIBLE);
+
+                TextView tv = (TextView) getView().findViewById(R.id.textView3);
+                tv.setText(location);
+                tv.setVisibility(View.VISIBLE);
+
+                tv = (TextView) getView().findViewById(R.id.textView4);
+                tv.setText(String.valueOf(lat) + "," + String.valueOf(lon));
+                tv.setVisibility(View.VISIBLE);
+
+                View mapView = getView().findViewById(R.id.map);
+                mapView.setVisibility(View.VISIBLE);
+
+            } else {
+
+                TextView tvDateTime = (TextView) getView().findViewById(R.id.textView2);
+                tvDateTime.setText("No alerts.");
+
+                TextView tvCategory = (TextView) getView().findViewById(R.id.textView_map_category);
+                tvCategory.setVisibility(View.INVISIBLE);
+
+                TextView tv = (TextView) getView().findViewById(R.id.textView3);
+                tv.setVisibility(View.INVISIBLE);
+
+                tv = (TextView) getView().findViewById(R.id.textView4);
+                tv.setVisibility(View.INVISIBLE);
+
+                View mapView = getView().findViewById(R.id.map);
+                mapView.setVisibility(View.INVISIBLE);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();

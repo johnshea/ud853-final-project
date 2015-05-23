@@ -28,6 +28,8 @@ public class AlertListFragment extends Fragment implements LoaderCallbacks<Curso
 
     public interface OnAlertSelectedListener {
         public void onAlertSelected(long id);
+        public void onDefaultSelected(long id);
+        public boolean isDualPane();
     }
 
     @Override
@@ -40,7 +42,7 @@ public class AlertListFragment extends Fragment implements LoaderCallbacks<Curso
             mCallback = (OnAlertSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnAlertSelectedListener");
         }
     }
 
@@ -175,6 +177,12 @@ public class AlertListFragment extends Fragment implements LoaderCallbacks<Curso
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Cursor> loader, Cursor data) {
         mCursorAdapter.swapCursor(data);
+
+        if (data != null && data.getCount() > 0) {
+            if (mCallback.isDualPane()) {
+                mCallback.onDefaultSelected(0);
+            }
+        }
     }
 
     @Override
