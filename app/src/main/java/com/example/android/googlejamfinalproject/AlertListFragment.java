@@ -19,6 +19,9 @@ import android.widget.TextView;
 import com.example.android.googlejamfinalproject.contentprovider.MyEventProvider;
 import com.example.android.googlejamfinalproject.data.EventContract;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -103,9 +106,18 @@ public class AlertListFragment extends Fragment implements LoaderCallbacks<Curso
                     case 1:
                         TextView tv = (TextView) view;
                         String text = cursor.getString(cursor.getColumnIndex(EventContract.EventEntry.COLUMN_NAME_DATE));
-                        int index = text.lastIndexOf(":");
-                        String result = text.substring(0, index);
-                        tv.setText(result);
+
+                        try {
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+                            Date date = simpleDateFormat.parse(text);
+
+                            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy MMMM dd hh:mm a");
+                            tv.setText(simpleDateFormat1.format(date));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         return true;
 
                     case 5:

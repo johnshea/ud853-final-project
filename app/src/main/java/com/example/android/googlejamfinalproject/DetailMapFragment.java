@@ -20,6 +20,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by John on 5/16/2015.
  */
@@ -86,11 +89,6 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap map) {
         myMap = map;
-//        map.addMarker(new MarkerOptions()
-//                .position(new LatLng(lat, lon))
-//                .title(location));
-//
-//        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lon), 14));
     }
 
     private class PopulateFragmentTask extends AsyncTask<Long, Void, Boolean> {
@@ -100,8 +98,6 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
         Float lat = 0.0f;
         Float lon = 0.0f;
         String location = "Center of World";
-
-
 
         @Override
         protected Boolean doInBackground(Long[] params) {
@@ -145,13 +141,13 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
             );
 
             if (cursor.moveToFirst()) {
-                category = cursor.getString(8);
+
                 dateTime = cursor.getString(1);
                 location = cursor.getString(7);
                 lat = cursor.getFloat(5);
                 lon = cursor.getFloat(6);
 
-                switch (category) {
+                switch (cursor.getString(8)) {
                     case "0":
                         category = "Nice!";
                         break;
@@ -187,7 +183,16 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
         protected void onPostExecute(Boolean isFound) {
             if (isFound) {
 
-                tvDateTime.setText(dateTime);
+                try {
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+                    Date date = simpleDateFormat.parse(dateTime);
+
+                    SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy MMMM dd hh:mm a");
+                    tvDateTime.setText(simpleDateFormat1.format(date));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 tvCategory.setText(category);
                 tvCategory.setVisibility(View.VISIBLE);
@@ -195,8 +200,9 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
                 tv3.setText(location);
                 tv3.setVisibility(View.VISIBLE);
 
-                tv4.setText(String.valueOf(lat) + "," + String.valueOf(lon));
-                tv4.setVisibility(View.VISIBLE);
+//                tv4.setText(String.valueOf(lat) + "," + String.valueOf(lon));
+//                tv4.setVisibility(View.VISIBLE);
+                tv4.setVisibility(View.INVISIBLE);
 
                 mapView.setVisibility(View.VISIBLE);
 
