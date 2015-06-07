@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MapActivity extends ActionBarActivity  {
+
+    long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,19 +20,29 @@ public class MapActivity extends ActionBarActivity  {
         if (savedInstanceState == null) {
 
             Intent intent = getIntent();
-            long id = intent.getLongExtra("id", -1L);
+            id = intent.getLongExtra("id", -1L);
 
-            DetailMapFragment newFragment = new DetailMapFragment();
-            Bundle args = new Bundle();
-            args.putLong("id", id);
-            newFragment.setArguments(args);
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.container_mapactivity, newFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+        } else {
+            id = savedInstanceState.getLong("id", -1L);
+            Log.d("MapActivity", "Restoring saveInstanceState in onCreate");
         }
 
+        DetailMapFragment newFragment = new DetailMapFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", id);
+        newFragment.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.container_mapactivity, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putLong("id", id);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

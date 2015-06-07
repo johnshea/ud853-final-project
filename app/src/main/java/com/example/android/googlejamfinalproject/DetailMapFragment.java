@@ -44,6 +44,8 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
 
     SupportMapFragment mapFragment;
 
+    long id;
+
     public DetailMapFragment() {
         // Required empty public constructor
     }
@@ -69,14 +71,16 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
 
         try {
 
-            Bundle bundle = getArguments();
+            if (savedInstanceState == null) {
+                Bundle bundle = getArguments();
 
-            long id;
-
-            if (bundle == null) {
-                id = -1;
+                if (bundle == null) {
+                    id = -1;
+                } else {
+                    id = getArguments().getLong("id", -1L);
+                }
             } else {
-                id = getArguments().getLong("id", -1L);
+                id = savedInstanceState.getLong("id", -1L);
             }
 
             new PopulateFragmentTask().execute(id);
@@ -84,6 +88,12 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putLong("id", id);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
