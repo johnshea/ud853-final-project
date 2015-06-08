@@ -1,12 +1,19 @@
 package com.example.android.googlejamfinalproject.services;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
+import com.example.android.googlejamfinalproject.MapActivity;
+import com.example.android.googlejamfinalproject.R;
 import com.example.android.googlejamfinalproject.contentprovider.MyEventProvider;
 import com.example.android.googlejamfinalproject.data.EventContract;
 
@@ -23,6 +30,8 @@ public class CreateAlertService extends Service {
     private Handler mHandler;
     private Boolean blnKeepCreating = true;
     Random rnd = new Random();
+
+    int count = 0;
 
     public class MyWaitRunnable implements Runnable {
 
@@ -56,7 +65,58 @@ public class CreateAlertService extends Service {
         public void run() {
 
 //            mHandler.post(new MyToastRunnable("Create alert - sleeping for 5 seconds"));
-            while( blnKeepCreating) {
+            while( blnKeepCreating ) {
+
+                count++;
+
+                if (count == 5) {
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSZ", Locale.US);
+
+                    String dateStamp = sdf.format(new Date());
+
+                    ContentValues values = new ContentValues();
+
+                    values.put(EventContract.EventEntry.COLUMN_NAME_DATE, dateStamp);
+                    values.put(EventContract.EventEntry.COLUMN_NAME_EVENT_ID, "0");
+                    values.put(EventContract.EventEntry.COLUMN_NAME_MAKE, "Lamborghini");
+                    values.put(EventContract.EventEntry.COLUMN_NAME_MODEL, "Huracán");
+                    values.put(EventContract.EventEntry.COLUMN_NAME_COLOR, "Green");
+                    values.put(EventContract.EventEntry.COLUMN_NAME_LOCATION, "New York, NY");
+                    values.put(EventContract.EventEntry.COLUMN_NAME_LAT, 40.752400);
+                    values.put(EventContract.EventEntry.COLUMN_NAME_LON, -73.978381);
+
+                    Uri mNewUri;
+
+                    mNewUri = getContentResolver().insert(MyEventProvider.CONTENT_URI, values);
+
+                    Intent resultIntent = new Intent(getApplicationContext(), MapActivity.class);
+                    resultIntent.putExtra("id", Long.valueOf(mNewUri.getLastPathSegment()));
+
+                    TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(getApplicationContext());
+                    taskStackBuilder.addParentStack(MapActivity.class);
+                    taskStackBuilder.addNextIntent(resultIntent);
+
+                    PendingIntent resultPendingIntent = taskStackBuilder.getPendingIntent(
+                            0,
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                    );
+
+
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext())
+                            .setSmallIcon(R.drawable.ic_car)
+                            .setContentTitle("Nice car!")
+                            .setContentText("Green Lamborghini spotted");
+
+                    mBuilder.setContentIntent(resultPendingIntent);
+
+                    NotificationManager notificationManager = (NotificationManager)
+                            getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    notificationManager.notify(1, mBuilder.build());
+
+                    count=0;
+                }
 
                 try {
                     int randomInt = rnd.nextInt(5) + 5;
