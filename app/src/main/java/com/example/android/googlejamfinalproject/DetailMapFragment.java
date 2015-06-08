@@ -1,12 +1,18 @@
 package com.example.android.googlejamfinalproject;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,6 +34,8 @@ import java.util.Date;
  */
 public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
 
+    private ShareActionProvider mShareActionProvider;
+
     String category = "0";
     String dateTime = "0:00 AM";
     Float lat = 0.0f;
@@ -48,6 +56,7 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
 
     public DetailMapFragment() {
         // Required empty public constructor
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -97,6 +106,44 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_detail_map_fragment, menu);
+
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int menu_id = item.getItemId();
+
+        if (menu_id == R.id.menu_item_share) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            if (id < 0) {
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this new app - AutoCorrect");
+            } else {
+                TextView share_tvDateTime = (TextView) getView().findViewById(R.id.textView2);
+                TextView share_tvCategory = (TextView) getView().findViewById(R.id.textView_map_category);
+                TextView share_tvLocation = (TextView) getView().findViewById(R.id.textView3);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,
+                        "In " + share_tvLocation.getText().toString() + ", I just saw a " + share_tvCategory.getText().toString()
+                                + " at " + share_tvDateTime.getText().toString() + ".");
+            }
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onMapReady(GoogleMap map) {
         myMap = map;
     }
@@ -112,7 +159,7 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
         @Override
         protected Boolean doInBackground(Long[] params) {
 
-            Long id = params[0];
+            id = params[0];
 
             String[] mProjection = {EventContract.EventEntry._ID,
                     EventContract.EventEntry.COLUMN_NAME_DATE,
@@ -152,6 +199,7 @@ public class DetailMapFragment extends Fragment implements OnMapReadyCallback {
 
             if (cursor.moveToFirst()) {
 
+                id = cursor.getLong(0);
                 dateTime = cursor.getString(1);
                 location = cursor.getString(7);
                 lat = cursor.getFloat(5);
